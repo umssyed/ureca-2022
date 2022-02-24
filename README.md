@@ -1,4 +1,7 @@
 # ureca-2022
+
+To view the Ureca app hosted on Heroku please visit: https://aqueous-castle-16433.herokuapp.com/
+
 A startup idea for students and tutors to connect. Inspired by Udemy and AirBnb
 
 This application was initially developed in 2018 but due to lack of support and my expertise in Stripe payments, the application was brought down.
