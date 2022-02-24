@@ -1,0 +1,21 @@
+<% include ../partials/header %>
+<link rel="stylesheet" href="/stylesheets/authentication/forgot.css">
+
+
+<div class="container">
+  <form action="/auth/forgot" method="POST">
+  			<legend><h2>Forgot Password</h2></legend>
+  			<div class="form-group">
+  				<label for="email"><h4><b>Enter Email</b></h4></label>
+  				<input type="email" name="username" placeholder="Email" class="form-control">
+  			</div>
+  			<div class="form-group">
+  				<input id="button" type="submit" class="btn btn-danger" value="Reset Password">
+  			</div>
+  </form>
+
+</div>
+
+
+
+<% include ../partials/footer %>

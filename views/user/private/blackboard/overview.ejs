@@ -1,0 +1,85 @@
+<% include ../../../partials/header %>
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/user/private/blackboard/overview.css">
+
+<!-- Start -->
+<div class="blackboard">
+  <div class="banner">
+    <div class="container">
+      <h1>Blackboard</h1>
+      <div class="links">
+          <li id="selected"><a href="/blackboard"><h4>Overview</h4></a></li>
+          <li><a href="/blackboard/tutor"><h4>Tutor</h4></a></li>
+          <li><a href="/blackboard/student"><h4>Student</h4></a></li>
+          <li><a href="/blackboard/tutor-reviews"><h4>Reviews</h4></a></li>>
+      </div>
+    </div>
+  </div>
+  <div class="overview">
+    <div class="container">
+      <div class="left">
+        <h4 id="selected_link"><a href='/blackboard'>To-Do's</a></h4>
+        <h4>
+          <a href='/blackboard/notifications'>Notifications
+          <% if(User.notifications.length > 0) { %>
+            (<%= User.notifications.length %>)
+          <% } %>
+          </a>
+        </h4>
+      </div>
+
+      <div class="right">
+        <div class="todos">
+
+          <% if(!User.isTutor) { %>
+            <% if(User.aboutMe || User.occupation || User.workplace || User.education || User.school) { %>
+              <% if(User.aboutMe.length < 2 || User.occupation.length < 2 || User.workplace.length < 2 || User.education.length < 2 || User.school.length < 1) { %>
+                <div class="profileUpdate">
+                  <h4><span><i class="fas fa-user"></i></span> &ensp; Your user profile is incomplete. </h4>
+                  <a href="/edit-profile">
+                    <h4>Update Now</h4>
+                  </a>
+                </div>
+              <% } else { %>
+                <div class="updated">
+                  <h4><span><i class="far fa-check-circle"></i></span> &ensp; Your profile is up to date! </h4>
+                </div>
+              <% } %>
+            <% } %>
+          <% } %>
+
+
+          <% if(User.isTutor) { %>
+            <% if(User.aboutMe || User.occupation || User.workplace || User.education || User.school || User.tutorExperience || User.teachingLocations) { %>
+              <% if(User.aboutMe.length < 2 || User.occupation.length < 2 || User.workplace.length < 2 || User.education.length < 2 || User.school.length < 1) { %>
+                <div class="profileUpdate">
+                  <h4><span><i class="fas fa-user"></i></span> &ensp; Your user profile is incomplete. </h4>
+                  <a href="/edit-profile">
+                    <h4>Update Now</h4>
+                  </a>
+                </div>
+              <% } %>
+              <% if(User.tutorExperience.length < 2 || User.teachingLocations.length < 1) { %>
+                <div class="tutorUpdate">
+                  <h4><span><i class="fas fa-graduation-cap"></i></span> &ensp; Your tutor profile is incomplete. </h4>
+                  <a href="/edit-tutor"><h4>Update Now</h4></a>
+                </div>
+              <% } %>
+
+              <% if(User.aboutMe.length >= 2 && User.occupation.length >= 2 && User.workplace.length >= 2 && User.education.length >= 2 && User.school.length >= 1 && User.tutorExperience.length >= 2 && User.teachingLocations.length >= 1) { %>
+                <div class="updated">
+                  <h4><span><i class="far fa-check-circle"></i></span> &ensp; Your profile is up to date! </h4>
+                </div>
+              <%} %>
+            <% } %>
+          <% } %>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% include ../../../partials/footer %>
+<script src="/scripts/class/allclasses.js" type="text/javascript"></script>

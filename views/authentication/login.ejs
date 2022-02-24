@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="/assets/logo/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Ureca CSS -->
+    <link rel="stylesheet" href="/stylesheets/authentication/login.css">
+    <title>Ureca | Login</title>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="left-col">
+        <div class="ureca">
+          <img id="logo" src="/assets/logo/logo.png" alt="logo">
+          <br>
+          <p id="welcome">WELCOME TO URECA!</p>
+        </div>
+      </div>
+      <div class="right-col">
+
+        <div class="header">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/howtouse/basics">How to use</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="login">
+          <% if(error && error.length > 0) { %>
+            <div class="flashError">
+              <h4><i class="fas fa-exclamation-triangle"></i>&emsp; <%= error %></h4>
+            </div>
+          <% } %>
+          <h1 id="loginIntro">Log in to Ureca!</h1>
+          <form action="/auth/login" method="POST">
+            <input type="email" name="username" placeholder="Email">
+            <input type="password" name="password" placeholder="Password">
+            <button type="submit">Log In</button>
+          </form>
+          <hr/>
+          <p id="terms">By logging in, you agree to Ureca's <a href="/termsandconditions">Terms of Service.</a></p>
+          <p id="footer">New to Ureca? <a href="/auth/signup" id="loginLink">Sign up!</a></p>
+          <p id="footer"><a href="/auth/forgot" id="loginLink">Forgot Password</a></p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </body>
+</html>

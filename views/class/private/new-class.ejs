@@ -1,0 +1,137 @@
+<% include ../../partials/header %>
+
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/class/private/new-class.css">
+<script src="/scripts/class/private/new-class.js" type="text/javascript"></script>
+
+<!-- Start -->
+<!-- <div class="se-pre-con"></div> -->
+<div class="new-class">
+  <div class="container">
+    <div class="classCreateIntro">
+      <h1>Create Class</h1>
+      <h4>Welcome! Here you will create your personalized class. The class information you enter here will be displayed to students and help them decide if it is the right one for them.</h4>
+    </div>
+
+    <form name="newClassForm" action="/blackboard/tutor/new" method="POST">
+      <fieldset>
+
+
+      <h3><b>Step 1 of 4:</b> Basics</h3>
+      <div class="classFormBox">
+        <label for="classTitle"><h4>Class Title <span><small>- (Required)</small></span></h4></label>
+        <h5>Enter a unique class title. This helps your class stand out and you can be as creative as you want.</h5>
+        <input required type="text" name="classTitle" placeholder="e.g. Spanish for everyone">
+
+        <hr>
+
+        <label for="mainSubject"><h4>Subject Category <span><small>- (Required)</small></span></h4></label>
+        <h5>What subject category does your class fall under?</h5>
+        <select required name="mainSubject">
+          <option value="" selected disabled hidden>Click to drop down</option>
+          <option value="Biology">Biology</option>
+          <option value="Math">Math</option>
+          <option value="Physics">Physics</option>
+          <option value="Chemistry">Chemistry</option>
+          <option value="Languages">Languages</option>
+          <option value="Social Studies">Social Studies</option>
+          <option value="Social Sciences">Social Sciences</option>
+          <option value="Career">Career</option>
+        </select>
+
+      </div>
+
+      <br>
+
+      <h3><b>Step 2 of 4:</b> Target Students</h3>
+      <div class="classDetails">
+
+        <label for="educationLevel"><h4>Target Education Level <span><small>- (Required)</small></span></h4></label>
+        <h5>What level of education is this class aimed for?</h5>
+        <select required name="educationLevel">
+          <option value="" selected disabled hidden>Click to drop down</option>
+          <option value="Any">Any</option>
+          <option value="Pre School">Pre School</option>
+          <option value="High School">High School</option>
+          <option value="Undergraduate">Undergraduate</option>
+          <option value="Post Graduate">Post Graduate</option>
+        </select>
+
+        <hr>
+
+        <label for="institute"><h4>Institute(s) <span><small>- (Optional)</small></span></h4></label>
+        <h5>Will students enrolled in a certain institute benefit from your tutoring class? If so, write down all associated intitute(s).</h5>
+        <input id="institute" type="text" placeholder="e.g. UofC or NAIT">
+        <div class="addBtn"><h4>Add Institute</h4></div>
+        <ul id="institute-ul" class="no-display"></ul>
+
+        <hr>
+
+        <label for="courseCode"><h4>Course Code(s) <span><small>- (Optional)</small></span></h4></label>
+        <h5>Which course codes are applicable to this tutoring class? You can have multiple course codes that your class will cover.</h5>
+        <input id="courseCode" type="text" placeholder="e.g. MATH-20 or CHEM-30">
+        <div class="addBtn"><h4>Add Course Code</h4></div>
+        <ul id="courseCode-ul" class="no-display"></ul>
+
+
+      </div>
+
+      <br>
+
+      <h3><b>Step 3 of 4:</b> Details For Your Students </h3>
+      <div class="classStructure">
+
+        <label for="topics"><h4>Topics <span><small>- (Optional)</small></span></h4></label>
+        <h5>What are the main topics that you can help your students with?</h5>
+        <input id="topics" type="text" placeholder="e.g. Algebraic Equations">
+        <div class="addBtn"><h4>Add Topic</h4></div>
+        <ul id="topics-ul" class="no-display"></ul>
+
+        <hr>
+
+        <label for="materialsProvided"><h4>Learning Materials <span><small>- (Optional)</small></span></h4></label>
+        <h5>Will you provide any additional learning materials for the students?</h5>
+        <input id="materialsProvided" type="text" placeholder="e.g. Past exams">
+        <div class="addBtn"><h4>Add Learning Material</h4></div>
+        <ul id="materialsProvided-ul" class="no-display"></ul>
+
+        <hr>
+
+        <label for="classDescription"><h4>Description <span><small>- (Optional)</small></span></h4></label>
+        <h5>Provide any other description for this class. You can include other details to help the student find out if this tutoring class is the right fit for them.</h5>
+        <textarea type="text" name="classDescription" rows="7" cols="100" placeholder="Enter a description for your tutoring class. Be as descriptive as you can."></textarea>
+
+        <!-- <label for="classType"><h4>Will this class be a one-on-one session or is it a group session?</h4></label>
+        <select name="classType">
+          <option value="" selected disabled hidden>Click to drop down</option>
+          <option value="One-On-One">One-On-One</option>
+          <option value="Group Session">Group Session</option>
+        </select> -->
+
+      </div>
+
+      <br>
+
+      <h3><b>Step 4 of 4:</b> Pricing </h3>
+      <div class="classPrice">
+        <label for="price"><h4>Hourly Price <span><small>- (Required)</small></span></h4></label>
+        <h5>What is the <i>hourly rate</i> for this tutoring class?</h5>
+        <br>
+        <div class="priceBox">
+          <h4><b>CAD</b></h4>
+          <input type="number" name="price" min="0" max="500" placeholder="0">
+          <h4><b>per Hour</b></h4>
+        </div>
+        <br>
+        <h4><small>You can edit the class at anytime by accessing it through your <b>blackboard</b>.</small></h4>
+      </div>
+      </fieldset>
+      <button type="submit">Create Class</button>
+
+
+    </form>
+
+
+  </div>
+
+<% include ../../partials/footer %>

@@ -1,0 +1,91 @@
+<% include ../partials/header %>
+
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/booking/request-booking.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+<link rel="stylesheet" media="screen" type="text/css" href="/datepicker/css/datepicker.css" />
+<script type="text/javascript" src="/datepicker/js/datepicker.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
+
+
+<!-- Timepicker -->
+<script type="text/javascript" src="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.css">
+<script type="text/javascript" src="https://jonthornton.github.io/jquery-timepicker/lib/bootstrap-datepicker.js"></script>
+
+<!-- MomentJS -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script> -->
+<!-- datePicker -->
+<link href="/datepicker/css/datepicker.min.css" rel="stylesheet" type="text/css">
+<script src="/datepicker/js/datepicker.min.js"></script>
+<script src="/datepicker/js/i18n/datepicker.en.js"></script>
+
+<div class='request-booking'>
+  <div class="container">
+    <h2>Book <%= Class[0].classTitle %></h2>
+
+    <div class="summary">
+      <div class="summaryInfo">
+        <h4 class="price"><b>CAD <%= Class[0].price %> per hour</b></h4>
+        <input class="no-display" type="text" id="price" value="<%= Class[0].price %>">
+
+        <% if(Class[0].classReviews.length > 0) { %>
+          <div class="rateYo overallSummary" data-rating="<%= Class[0].overallAvg.toFixed(1) %>"></div>
+          <h5>Based on <b><%= Class[0].classReviews.length %></b> Review(s)</h5>
+        <% } else { %>
+          <h5>Not Yet Rated</h5>
+        <% }; %>
+
+          <hr>
+          <form name="Booking" action="/book/<%= Class[0]._id %>" method="POST">
+            <h5>Select Date</h5>
+            <div class="date">
+              <input onkeydown="return false" required autocomplete="off" type='text' placeholder="Select Date" id="datePick" class='datepicker-here' data-language='en' value=''/>
+              <input class="no-display" type="text" id="date" name="date" value=''>
+            </div>
+            <h5>Time Period</h5>
+            <div class="timePicker">
+              <div class="timeForm">
+                <input onkeydown="return false" required id="startTime" name="startTime" type="text" data-time-format="H:i" placeholder="Start"/>
+                <span><i class="fas fa-chevron-right"></i></span>
+                <input onkeydown="return false" required id="endTime" name="endTime" type="text" data-time-format="H:i" placeholder="End"/>
+              </div>
+            </div>
+            <div class="qoute">
+              <h4><b>Booking Summay</b></h4>
+              <div class="totalHours">
+                <h5>Hours booked</h5>
+                <div class="displayHours">
+                  <h4 id="numberOfHours">0</h4>
+                  <input required class="no-display" type="number" id="totalHours" name="hours" min="1" placeholder="0">
+                </div>
+              </div>
+
+              <div class="totalPrice">
+                <h5>Total Price</h5>
+                <div class="displayPrice">
+                  <h4>CAD&ensp;</h4>
+                  <h4 id="displayPrice">0</h4>
+                </div>
+                <input required class="no-display" type="number" id="totalPrice" name="totalPrice" min="1" placeholder="0">
+              </div>
+
+            </div>
+            <% if(User != undefined && User._id.equals(Class[0].author._id)) { %>
+              <button type="submit" id="button" disabled><h4><b>Request Booking</b></h4></button>
+            <% } else { %>
+              <button type="submit" id="button"><h4><b>Request Booking</b></h4></button>
+            <% } %>
+            <br>
+          </form>
+          <h6>By requesting to book, you will be able to <b>message</b> your tutor.</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% include ../partials/footer %>
+<script src="/scripts/booking/request-booking.js" type="text/javascript" defer></script>

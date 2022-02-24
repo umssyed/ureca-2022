@@ -1,0 +1,341 @@
+<% include ../partials/header %>
+
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/class/classpage.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+<link rel="stylesheet" media="screen" type="text/css" href="/datepicker/css/datepicker.css" />
+<script type="text/javascript" src="/datepicker/js/datepicker.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
+
+
+<!-- Timepicker -->
+<script type="text/javascript" src="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.css">
+<script type="text/javascript" src="https://jonthornton.github.io/jquery-timepicker/lib/bootstrap-datepicker.js"></script>
+
+<!-- MomentJS -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script> -->
+<!-- datePicker -->
+<link href="/datepicker/css/datepicker.min.css" rel="stylesheet" type="text/css">
+<script src="/datepicker/js/datepicker.min.js"></script>
+<script src="/datepicker/js/i18n/datepicker.en.js"></script>
+
+
+
+<!-- Start -->
+<% if(User != undefined && User._id.equals(Class[0].author._id)) { %>
+  <div class="previewMode">
+    <div class="preview">
+      <h4>You are in preview mode. This is how students and other visitors will see your class page</h4>
+      <h4>Preview Mode</h4>
+      <h4 id="editClass"><a href="/blackboard/tutor/<%= Class[0]._id %>/edit">Edit Class Listing</a></h4>
+    </div>
+  </div>
+<% }; %>
+
+
+<div class="classHeader">
+  <div class="banner"></div>
+</div>
+
+<div class="mobIllustration">
+  <% if(Class[0].mainSubject === 'Languages') { %>
+    <img src="/assets/classIllustrations/languages.png" alt="class-illustration">
+  <% } else if (Class[0].mainSubject === 'Math') { %>
+    <img src="/assets/classIllustrations/math.png" alt="class-illustration">
+  <% } else if (Class[0].mainSubject === 'Chemistry') { %>
+    <img src="/assets/classIllustrations/chemistry.png" alt="class-illustration">
+  <% } else if (Class[0].mainSubject === 'Physics') { %>
+    <img src="/assets/classIllustrations/physics.png" alt="class-illustration">
+  <% } else if (Class[0].mainSubject === 'Biology') { %>
+    <img src="/assets/classIllustrations/biology.png" alt="class-illustration">
+  <% } else { %>
+    <img src="/assets/classIllustrations/ureca.png" alt="class-illustration">
+  <% } %>
+</div>
+
+<div class="container" id="myContainer">
+  <div class="left">
+    <% if(Class[0].mainSubject === 'Languages') { %>
+      <img src="/assets/classIllustrations/languages.png" alt="class-illustration">
+    <% } else if (Class[0].mainSubject === 'Math') { %>
+      <img src="/assets/classIllustrations/math.png" alt="class-illustration">
+    <% } else if (Class[0].mainSubject === 'Chemistry') { %>
+      <img src="/assets/classIllustrations/chemistry.png" alt="class-illustration">
+    <% } else if (Class[0].mainSubject === 'Physics') { %>
+      <img src="/assets/classIllustrations/physics.png" alt="class-illustration">
+    <% } else if (Class[0].mainSubject === 'Biology') { %>
+      <img src="/assets/classIllustrations/biology.png" alt="class-illustration">
+    <% } else { %>
+      <img src="/assets/classIllustrations/ureca.png" alt="class-illustration">
+    <% } %>
+      <div class="summary">
+        <div class="summary_scroll no-display">
+          <h4><%= Class[0].classTitle %></h4>
+        </div>
+        <div class="summaryInfo">
+          <h4 class="price"><b>CAD <%= Class[0].price %> per hour</b></h4>
+          <input class="no-display" type="text" id="price" value="<%= Class[0].price %>">
+
+          <% if(Class[0].classReviews.length > 0) { %>
+            <div class="rateYo overallSummary" data-rating="<%= Class[0].overallAvg.toFixed(1) %>"></div>
+            <h5>Based on <b><%= Class[0].classReviews.length %></b> Review(s)</h5>
+          <% } else { %>
+            <h5>Not Yet Rated</h5>
+          <% }; %>
+
+
+            <hr>
+            <form name="Booking" action="/book/<%= Class[0]._id %>" method="POST">
+              <h5>Select Date</h5>
+              <div class="date">
+                <input required autocomplete="off" type='text' placeholder="Select Date" id="datePick" class='datepicker-here' data-language='en' value=''/>
+                <input class="no-display" type="text" id="date" name="date" value=''>
+              </div>
+              <h5>Time Period</h5>
+              <div class="timePicker">
+                <div class="timeForm">
+                  <input required id="startTime" name="startTime" type="text" data-time-format="H:i" placeholder="Start"/>
+                  <span><i class="fas fa-chevron-right"></i></span>
+                  <input required id="endTime" name="endTime" type="text" data-time-format="H:i" placeholder="End"/>
+                </div>
+              </div>
+              <div class="qoute">
+                <h4><b>Booking Summay</b></h4>
+                <div class="totalHours">
+                  <h5>Hours booked</h5>
+                  <div class="displayHours">
+                    <h4 id="numberOfHours">0</h4>
+                    <input required class="no-display" type="number" id="totalHours" name="hours" min="1" placeholder="0">
+                  </div>
+                </div>
+
+                <div class="totalPrice">
+                  <h5>Total Price</h5>
+                  <div class="displayPrice">
+                    <h4>CAD&ensp;</h4>
+                    <h4 id="displayPrice">0</h4>
+                  </div>
+                  <input required class="no-display" type="number" id="totalPrice" name="totalPrice" min="1" placeholder="0">
+                </div>
+
+              </div>
+              <% if(User != undefined && User._id.equals(Class[0].author._id)) { %>
+                <button type="submit" id="button" disabled><h4><b>Request Booking</b></h4></button>
+              <% } else { %>
+                <button type="submit" id="button"><h4><b>Request Booking</b></h4></button>
+              <% } %>
+
+            </form>
+            <h6>By requesting to book, you will be able to <b>message</b> your tutor.</h6>
+        </div>
+      </div>
+  </div>
+
+
+  <div class="center">
+      <div class="bannerInfo">
+        <h1 class="classTitle"><%= Class[0].classTitle %></h1>
+      </div>
+
+      <div class="authorInfo">
+        <h5>By <%= Class[0].author.firstName %> <%= Class[0].author.lastName %></h5>
+        <h5>Last Updated On <%= moment(Class[0].updatedAt).format("DD MMMM YYYY") %></h5>
+      </div>
+
+      <div class="centerInfo">
+
+            <!-- Class Overview Card -->
+          <h3 id="overview">Class Overview</h3>
+          <div class="overview-box">
+            <div class="listOverview">
+              <li><h4>Education Level: <b><%= Class[0].educationLevel %></b></h4></li>
+              <li><h4>Subject Category: <b><%= Class[0].mainSubject %></b></h4></li>
+              <% if(Class[0].institute.length && Class[0].institute.length > 0) { %>
+                <li><h4>Recommended for students enrolled in institute(s): <br><b><%= Class[0].institute.join(', ') %></b></h4></li>
+              <% } %>
+              <% if(Class[0].courseCode && Class[0].courseCode.length > 0) { %>
+                <li><h4>Recommended for students taking: <br><b><%= Class[0].courseCode.join(', ') %></b></h4></li>
+              <% } %>
+            </div>
+            <% if(Class[0].author.teachingLocations.length > 0) { %>
+              <div class="listLocations">
+                <h4><b>My preferred teaching locations in <%= Class[0].author.city %></b></h4>
+                <div class="listItems">
+                  <% Class[0].author.teachingLocations.forEach(function(location) { %>
+                    <li><i class="fas fa-angle-right"></i> <h4><%= location %></h4></li>
+                  <% }); %>
+                </div>
+              </div>
+            <% }; %>
+
+          </div>
+
+          <!-- About Your Tutor Card -->
+          <h3 id="aboutTutor">About Your Tutor</h3>
+          <div class="tutor-box">
+            <div class="tutor-info">
+              <div class="left">
+                <a href="/user/<%= Class[0].author.slug %>"><h3 id="authorName"><%= Class[0].author.firstName %> <%= Class[0].author.lastName %></h3></a>
+                <div class="tutorRating">
+                  <% if(Class[0].author.userReviews.length > 0) { %>
+                    <div class="rateYo tutorOverallRating" data-rating="<%= Class[0].author.overallAvg.toFixed(1) %>"></div>
+                    <h5><b><%= Class[0].author.overallAvg.toFixed(1) %></b> ( <%= Class[0].author.userReviews.length %> Reviews on tutor)</h5>
+                  <% } else { %>
+                    <h5 id="norating">Tutor does not have a review yet</h5>
+                  <% }; %>
+                </div>
+                <% if(Class[0].author.languages.length > 0) { %>
+                  <h5>
+                    Languages Spoken: <%= Class[0].author.languages.join(', ') %>
+                  </h5>
+                <% } %>
+                <h5><%= Class[0].author.education %></h5>
+                <% if(Class[0].author.occupation && Class[0].author.workplace) { %>
+                  <h5><%= Class[0].author.occupation %> at <%= Class[0].author.workplace %></h5>
+                <% } %>
+
+              </div>
+              <div class="right">
+                <img src="<%= Class[0].author.profilePhoto %>" alt="">
+              </div>
+            </div>
+
+            <hr>
+            <h4>
+              <b>Tutoring Experience</b>
+            </h4>
+            <h4>
+              <%= Class[0].author.tutorExperience %>
+            </h4>
+          </div>
+
+          <!-- All Class Information Cards -->
+          <% if(Class[0].classDescription.length > 0) { %>
+            <h3 id="description">Class Description</h3>
+            <div class="box">
+              <h4>
+                <%= Class[0].classDescription %>
+              </h4>
+            </div>
+          <% }; %>
+
+          <% if(Class[0].topics.length > 0) { %>
+            <h3 id="topics">Topics Covered</h3>
+            <div class="box">
+              <div class="listItems">
+
+                  <% Class[0].topics.forEach(function(topic){ %>
+                    <li><i class="fas fa-angle-right"></i><h4><%= topic %></h4></li>
+                  <% }); %>
+
+              </div>
+            </div>
+          <% }; %>
+
+          <% if(Class[0].materialsProvided.length > 0) { %>
+            <h3 id="materialsProvided">Materials Provided</h3>
+            <div class="box">
+              <div class="listItems">
+
+                  <% Class[0].materialsProvided.forEach(function(material){ %>
+                    <li><i class="far fa-clipboard"></i><h4><%= material %></h4></li>
+                  <% }); %>
+
+              </div>
+            </div>
+          <% }; %>
+
+          <!-- Class Reviews Card -->
+          <h3 id="#reviews">Student Reviews
+            <% if(Class[0].classReviews.length > 0) { %>
+              (<%= Class[0].classReviews.length %>)
+            <% } %>
+          </h3>
+          <% if(Class[0].classReviews.length > 0) { %>
+            <div class="tutor-box">
+              <div class="reviewsBox">
+                <div class="score">
+                  <div class="overallScore">
+                    <h1><%= Class[0].overallAvg.toFixed(1) %></h1>
+                  </div>
+                  <div class="overallScoreBase">
+                    <div class="rateYo overall" data-rating="<%= Class[0].overallAvg.toFixed(1) %>"></div>
+                    <h4><b>Overall Score</b></h4>
+                  </div>
+                </div>
+
+                <div class="otherScores">
+                  <div id="clarityMob">
+                    <h4><b>Clarity</b></h4>
+                    <div class="rateYo clarity" data-rating="<%= Class[0].clarityAvg.toFixed(1) %>"></div>
+                  </div>
+                  <div id="usefulnessMob">
+                    <h4><b>Usefulness</b></h4>
+                    <div class="rateYo usefulness" data-rating="<%= Class[0].usefulnessAvg.toFixed(1) %>"></div>
+                  </div>
+                  <div id="knowledgeMob">
+                    <h4><b>Tutor's Knowledge</b></h4>
+                    <div class="rateYo knowledge" data-rating="<%= Class[0].knowledgeAvg.toFixed(1) %>"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reviews from Students -->
+              <h3>Reviews</h3>
+              <% Class[0].classReviews.forEach(function(reviews) { %>
+              <div class="studentCommentBox">
+                <div class="studentProfile">
+                  <img src="<%= reviews.author.profilePhoto %>" alt="">
+                  <h4><b><%= reviews.author.firstName %> <%= reviews.author.lastName %></b></h4>
+                </div>
+                <div class="studentComments">
+                  <h4><%= reviews.comment %></h4>
+                  <div id="student">
+                    <h5 id="studentMobileReview"><%= reviews.author.firstName %> <%= reviews.author.lastName %></h5>
+                    <h5><%= moment(reviews.createdAt).startOf('min').fromNow(); %></h5>
+                  </div>
+                </div>
+              </div>
+              <% }); %>
+            </div>
+          <% } else { %>
+            <h4>This class has not been reviewed yet.</h4>
+          <% }; %>
+
+      </div>
+  </div>
+
+</div>
+
+<div class="fixedMobileFooter">
+  <div class="container">
+    <div class="mobLeft">
+      <h4>CAD <%= Class[0].price %> per hour</h4>
+      <% if(Class[0].classReviews.length > 0) { %>
+        <div class="rateYo overallSummaryMob" data-rating="<%= Class[0].overallAvg.toFixed(1) %>"></div>
+      <% }; %>
+    </div>
+    <div class="mobRight">
+      <% if(User != undefined && User._id.equals(Class[0].author._id)) { %>
+
+      <% } else { %>
+        <a href='/book/<%= Class[0]._id %>'>
+          <div>
+            <h4>
+              <b>Book</b>
+            </h4>
+          </div>
+        </a>
+      <% } %>
+
+    </div>
+  </div>
+</div>
+
+
+<% include ../partials/footer %>
+<script src="/scripts/class/classpage.js" type="text/javascript" defer></script>

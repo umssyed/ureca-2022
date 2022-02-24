@@ -1,0 +1,203 @@
+<% include ../partials/header %>
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/user/publicprofile.css">
+<script src="/scripts/user/publicprofile.js" type="text/javascript"></script>
+
+<!-- Start -->
+<div class="publicProfile">
+  <div class="container" id="myContainer">
+    <div class="left">
+      <div class="profilePhoto">
+        <img src="<%= Profile[0].profilePhoto %>" alt="<%= Profile[0].firstName %>">
+      </div>
+
+      <h2 id="userName"><%= Profile[0].firstName %> <%= Profile[0].lastName %></h2>
+      <% if(Profile[0].education || Profile[0].occupation || Profile[0].workplace || Profile[0].school.length > 0 || Profile[0].languages.length >0) { %>
+        <div class="aboutUser">
+
+          <% if(Profile[0].education.length > 0) { %>
+            <h5 id="education"><b>Education</b></h5>
+            <li><h5><%= Profile[0].education %></h5></li>
+          <% }; %>
+
+          <% if(Profile[0].occupation.length > 0) { %>
+            <h5 id="occupation"><b>Occupation</b></h5>
+            <li><h5><%= Profile[0].occupation %></h5></li>
+          <% }; %>
+
+          <% if(Profile[0].workplace.length > 0) { %>
+          <h5 id="workplace"><b>Current Work Place</b></h5>
+          <li><h5><%= Profile[0].workplace %></h5></li>
+          <% }; %>
+
+          <% if(Profile[0].school.length > 0) { %>
+            <h5 id="school"><b>School</b></h5>
+            <% Profile[0].school.forEach(function(school) { %>
+              <li><h5><%= school %></h5></li>
+            <% }); %>
+          <% }; %>
+
+          <% if(Profile[0].languages.length > 0) { %>
+            <h5 id="languages"><b>Languages</b></h5>
+            <% Profile[0].languages.forEach(function(language) { %>
+              <li><h5><%= language %></h5></li>
+            <% }); %>
+          <% }; %>
+
+        </div>
+      <% }; %>
+    </div>
+
+    <div class="center">
+      <div class="mobileUserHeader">
+        <div class="mobileUserInfo">
+          <div class="userHeaderInfo1">
+            <h1><b><%= Profile[0].firstName %> <%= Profile[0].lastName %></b></h1>
+            <div class="mobProfileRating">
+              <div class="rateYo overallTutorMobile" data-rating="<%= Profile[0].overallAvg.toFixed(1) %>"></div>
+              <h5><b>(<%= Profile[0].overallAvg.toFixed(1) %>)</b></h5>
+            </div>
+            <br>
+          </div>
+          <div class="userHeaderInfo2">
+            <h5><%= Profile[0].city %>,  <%= Profile[0].country %> <b>-</b> </h5>
+            <h5 id="mobileJoinedDate">Joined <%= moment(Profile[0].createdAt).format("MMMM YYYY") %></h5>
+          </div>
+          <% if(Profile[0].education.length > 0 || Profile[0].workplace.length > 0) { %>
+            <div class="userHeaderInfo3">
+              <% if(Profile[0].education.length > 0) { %>
+                <h5><%= Profile[0].education %></h5>
+              <% }; %>
+              <% if(Profile[0].workplace.length > 0) { %>
+              <h5>, <%= Profile[0].workplace %></h5>
+              <% }; %>
+            </div>
+          <% }; %>
+          <% if(Profile[0].languages.length > 0) { %>
+            <div class="userHeaderInfo4">
+              <h5><%= Profile[0].languages.join(', ') %></h5>
+            </div>
+          <% }; %>
+        </div>
+        <div class="mobileUserPhoto">
+          <img src="<%= Profile[0].profilePhoto %>" alt="<%= Profile[0].firstName %>">
+        </div>
+      </div>
+
+      <div class="userHeader">
+        <div class="starRatingHeader">
+          <div class="rateYo overallTutor" data-rating="<%= Profile[0].overallAvg.toFixed(1) %>"></div>
+          <h5><b>(<%= Profile[0].overallAvg.toFixed(1) %></b>)</h5>
+        </div>
+        <div class="reviews">
+          <h4><span><%= Profile[0].userReviews.length %> Reviews</span></h4>
+        </div>
+        <div class="location">
+          <h4><span><i class="fas fa-map-marker-alt"></i></span>  <%= Profile[0].city %>,  <%= Profile[0].country %></h4>
+        </div>
+        <div class="joinedDate">
+          <h4>Joined <%= moment(Profile[0].createdAt).format("MMMM YYYY") %></h4>
+        </div>
+      </div>
+
+      <% if(Profile[0].aboutMe) { %>
+        <div class="aboutMe">
+          <h2>A little about me</h2>
+          <div class="aboutMeBox">
+            <h4><%= Profile[0].aboutMe %></h4>
+          </div>
+        </div>
+      <% }; %>
+
+      <% if(Profile[0].isTutor && Profile[0].tutorExperience.length > 2 && Profile[0].teachingLocations.length > 2) { %>
+        <div class="tutorExperience">
+          <h2>My experience with tutoring</h2>
+          <div class="tutorExperienceBox">
+
+            <% if(Profile[0].teachingLocations.length > 0) { %>
+              <h4><b>My preferred teaching locations in <%= Profile[0].city %></b></h4>
+              <div class="teachingLocations">
+                <% Profile[0].teachingLocations.forEach(function(location) { %>
+                  <li><i class="fas fa-angle-right"></i><h4> <%= location %></h4></li>
+                <% }); %>
+              </div>
+
+            <% }; %>
+
+            <% if(Profile[0].tutorExperience && Profile[0].tutorExperience.length > 2) { %>
+              <hr>
+              <h4><%= Profile[0].tutorExperience %></h4>
+            <% }; %>
+
+          </div>
+        </div>
+      <% }; %>
+
+      <% if(Profile[0].userReviews.length > 0) { %>
+        <div class="reviews">
+          <h2>Student Reviews (<%= Profile[0].userReviews.length %>)</h2>
+          <div class="reviewsBox">
+            <% Profile[0].userReviews.forEach(function(reviews) { %>
+            <div class="studentCommentBox">
+              <div class="studentProfile">
+                <img src="<%= reviews.author.profilePhoto %>" alt="">
+                <h5><b><%= reviews.author.firstName %> <%= reviews.author.lastName %></b></h5>
+              </div>
+              <div class="studentComments">
+                <h4><%= reviews.comment %></h4>
+                <h5><%= moment(reviews.createdAt).format('LL'); %></h5>
+                <h5 id="mobileUserName"><b><%= reviews.author.firstName %> <%= reviews.author.lastName %></b></h5>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+        </div>
+      <% }; %>
+
+      <% if(UserClass.length > 0) { %>
+        <div class="moreClass">
+          <h2>More Tutoring by <%= Profile[0].firstName %></h2>
+          <div class="classBox">
+            <% UserClass.forEach(function(userClass) { %>
+              <a href="/allclasses/<%= userClass.slug %>">
+                <div class="classReview">
+                  <div class="top">
+                    <% if(userClass.mainSubject === 'Languages') { %>
+                      <img src="/assets/classIllustrations/languages.png" alt="class-illustration">
+                    <% } else if (userClass.mainSubject === 'Math') { %>
+                      <img src="/assets/classIllustrations/math.png" alt="class-illustration">
+                    <% } else if (userClass.mainSubject === 'Chemistry') { %>
+                      <img src="/assets/classIllustrations/chemistry.png" alt="class-illustration">
+                    <% } else if (userClass.mainSubject === 'Physics') { %>
+                      <img src="/assets/classIllustrations/physics.png" alt="class-illustration">
+                    <% } else if (userClass.mainSubject === 'Biology') { %>
+                      <img src="/assets/classIllustrations/biology.png" alt="class-illustration">
+                    <% } else { %>
+                      <img src="/assets/classIllustrations/math.png" alt="class-illustration">
+                    <% } %>
+                  </div>
+                  <div class="bottom">
+                    <h4><b><%= userClass.classTitle %></b></h4>
+                    <% if(userClass.classReviews.length == 0) { %>
+                      <h6 class="review">Not yet reviewed</h6>
+                    <% } else { %>
+                      <div class="rateYo overallClass" data-rating="<%= userClass.overallAvg.toFixed(1) %>"></div>
+                    <% } %>
+                  </div>
+                </div>
+              </a>
+            <% }) %>
+          </div>
+
+        </div>
+      <% }; %>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+<% include ../partials/footer %>
+<script src="/scripts/class/allclasses.js" type="text/javascript"></script>

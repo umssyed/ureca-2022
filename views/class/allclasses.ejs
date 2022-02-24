@@ -1,0 +1,124 @@
+<% include ../partials/header %>
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/class/allclasses.css">
+
+
+<!-- Start -->
+<div class="pageContainer">
+  <div class="container">
+
+  </div>
+  <h2 id="subHeader">Available tutoring classes </h2>
+  <div class="classListings">
+    <% Class.forEach(function(Class) { %>
+      <div class="classBox">
+        <div class="tutor">
+          <a href="/user/<%= Class.author.slug %>">
+            <img src="<%= Class.author.profilePhoto %>" alt="profile-picture">
+          </a>
+        </div>
+        <div class="classCardOuter">
+          <a class="classCard" href="/allclasses/<%= Class.slug %>">
+            <div class="classTop">
+              <% if(Class.mainSubject === 'Languages') { %>
+                <img src="/assets/classIllustrations/languages.png" alt="class-illustration">
+              <% } else if (Class.mainSubject === 'Math') { %>
+                <img src="/assets/classIllustrations/math.png" alt="class-illustration">
+              <% } else if (Class.mainSubject === 'Chemistry') { %>
+                <img src="/assets/classIllustrations/chemistry.png" alt="class-illustration">
+              <% } else if (Class.mainSubject === 'Physics') { %>
+                <img src="/assets/classIllustrations/physics.png" alt="class-illustration">
+              <% } else if (Class.mainSubject === 'Biology') { %>
+                <img src="/assets/classIllustrations/biology.png" alt="class-illustration">
+              <% } else { %>
+                <img src="/assets/classIllustrations/ureca.png" alt="class-illustration">
+              <% } %>
+
+            </div>
+            <div class="classMain">
+              <div class="classRating">
+                <% if(Class.classReviews.length > '0') { %>
+                  <div class="rateYo clarity" data-rating="<%= Class.overallAvg %>"></div>
+                  <h5><%= Class.overallAvg.toFixed(1) %> (<%= Class.classReviews.length %>)</h5>
+                <% } else { %>
+                  <h5 id="noRatings">Not Yet Rated</h5>
+                <% } %>
+              </div>
+              <div class="subject-level">
+                <h5 id='level'><%= Class.educationLevel.toUpperCase() %></h5>
+                <h5 id='subject'><%= Class.mainSubject.toUpperCase() %></h5>
+              </div>
+              <div class="title">
+                <h4><%= Class.classTitle.toUpperCase() %></h4>
+              </div>
+              <div class="bottom">
+                <h5><%= Class.author.city %></h5>
+                <h4>CAD <%= Class.price %> per Hour</h4>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+
+  <div class="classListingsMob">
+    <% Class.forEach(function(Class) { %>
+      <hr>
+      <div class="mobClass">
+        <a class="classCardMob" href="/allclasses/<%= Class.slug %>">
+          <div class="classImageMob">
+            <% if(Class.mainSubject === 'Languages') { %>
+              <img src="/assets/classIllustrations/languages.png" alt="class-illustration">
+            <% } else if (Class.mainSubject === 'Math') { %>
+              <img src="/assets/classIllustrations/math.png" alt="class-illustration">
+            <% } else if (Class.mainSubject === 'Chemistry') { %>
+              <img src="/assets/classIllustrations/chemistry.png" alt="class-illustration">
+            <% } else if (Class.mainSubject === 'Physics') { %>
+              <img src="/assets/classIllustrations/physics.png" alt="class-illustration">
+            <% } else if (Class.mainSubject === 'Biology') { %>
+              <img src="/assets/classIllustrations/biology.png" alt="class-illustration">
+            <% } else { %>
+              <img src="/assets/classIllustrations/ureca.png" alt="class-illustration">
+            <% } %>
+
+            <div class="classRatingMob">
+              <% if(Class.classReviews.length > '0') { %>
+                <div class="rateYo" data-rating="<%= Class.overallAvg %>"></div>
+                <h6><%= Class.overallAvg.toFixed(1) %> (<%= Class.classReviews.length %>)</h6>
+              <% } else { %>
+                <h6 id="noRatings">Not Yet Rated</h6>
+              <% } %>
+            </div>
+          </div>
+          <div class="classInfoMob">
+            <div class="level-subject-mob">
+              <h5 id='levelMob'><%= Class.educationLevel.toUpperCase() %></h5>
+              <h5 id='subjectMob'><%= Class.mainSubject.toUpperCase() %></h5>
+            </div>
+            <div class="classRatingMobSmall">
+              <% if(Class.classReviews.length > '0') { %>
+                <div class="rateYo" data-rating="<%= Class.overallAvg %>"></div>
+                <h6><%= Class.overallAvg.toFixed(1) %> (<%= Class.classReviews.length %>)</h6>
+              <% } else { %>
+                <h6 id="noRatings">Not Yet Rated</h6>
+              <% } %>
+            </div>
+            <div class="titleMob">
+              <h4><%= Class.classTitle.toUpperCase() %></h4>
+              <h5><%= Class.author.firstName %> <%= Class.author.lastName %></h5>
+            </div>
+            <div class="bottom">
+              <h6><%= Class.author.city %></h6>
+              <h5 id="priceMob">CAD <%= Class.price %> per Hour</h5>
+            </div>
+          </div>
+        </a>
+      </div>
+
+    <% }); %>
+  </div>
+</div>
+<br>
+<% include ../partials/footer %>
+<script src="/scripts/class/allclasses.js" type="text/javascript"></script>

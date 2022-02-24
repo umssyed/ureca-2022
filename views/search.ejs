@@ -1,0 +1,236 @@
+<% include partials/header %>
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/search.css">
+
+
+<!-- Start -->
+<div class="search">
+  <br>
+  <div class="searchContainer">
+    <% if(noMatch === undefined) { %>
+      <div class="filters">
+        <div class="filtersHead">
+          <% if(search) { %>
+            <h4 id="results"><%= Class.length %> results found for <b>"<%= search %>"</b></h4>
+          <% } %>
+
+          <!-- Populate all searchEntry for jQuery to read  -->
+          <input hidden type="text" name="searchEntry" value="<%= search %>">
+          <h4 id="clearFilter"><a href="/classes">X Clear Filters</a></h4>
+          <h4 id="showFilter">Hide Filters</h4>
+        </div>
+
+        <div class="filterForm">
+          <form class="searchForm" action="/classes" method="GET">
+            <input type="hidden" name="search" placeholder="Search for Classes" value="<%= search %>">
+            <div class="education">
+              <h5 id="ed_title"><b>Education Level</b></h5>
+              <!-- Populate all educationLevel filters for jQuery to read  -->
+              <input hidden type="text" id="educationPopulate" style="whiteSpace :nowrap;" value=
+              <% if(queryFE !== null) { %>
+                '<%= queryFE.educationLevel %>'
+              <% } %>
+              >
+              <ul>
+                <h5><input type="checkbox" name="any" value="Any"> All-Levels</h5>
+                <h5><input type="checkbox" name="preSchool" value="Pre School"> Pre School</h5>
+                <h5><input type="checkbox" name="highSchool" value="High School"> High School</h5>
+                <h5><input type="checkbox" name="under" value="Undergraduate"> Undergraduate</h5>
+                <h5><input type="checkbox" name="post" value="Postgraduate"> Postgraduate</h5>
+              </ul>
+            </div>
+            <div class="subject">
+              <h5 id="sub_title"><b>Subject</b></h5>
+              <!-- Populate all mainsubject filters for jQuery to read  -->
+              <input hidden type="text" id="subjectPopulate" value=
+              <% if(queryFE !== null) { %>
+                '<%= queryFE.mainSubject %>'
+              <% } %>
+              >
+
+              <div class="subjectList">
+                <ul>
+                  <li><h5><input type="checkbox" name="bio" value="Biology"> Biology</h5></li>
+                  <li><h5><input type="checkbox" name="math" value="Math"> Math</h5></li>
+                  <li><h5><input type="checkbox" name="physics" value="Physics"> Physics</h5></li>
+                  <li><h5><input type="checkbox" name="chemistry" value="Chemistry"> Chemistry</h5></li>
+                  <li><h5><input type="checkbox" name="languages" value="Languages"> Languages</h5></li>
+                  <li><h5><input type="checkbox" name="socialStudies" value="Social Studies"> Social Studies</h5></li>
+                  <li><h5><input type="checkbox" name="socialSciences" value="Social Sciences"> Social Sciences</h5></li>
+                </ul>
+                <ul>
+
+                </ul>
+              </div>
+            </div>
+            <div class="ratings">
+              <h5 id="rating_title"><b>Ratings</b></h5>
+              <input hidden type="text" id="ratingPopulate" value=
+              <% if(queryFE !== null) { %>
+                '<%= queryFE.rating %>'
+              <% } %>
+              >
+              <ul>
+                <li>
+                  <input type="radio" name="rating" value="5">
+                  <div class="rateYo rating5" data-rating="5"></div><h5>5.0</h5>
+
+                </li>
+                <li>
+                  <input type="radio" name="rating" value="4">
+                  <div class="rateYo rating4" data-rating="4"></div><h5>4.0 & up</h5>
+                </li>
+                <li>
+                  <input type="radio" name="rating" value="3">
+                  <div class="rateYo rating3" data-rating="3"></div><h5>3.0 & up</h5>
+                </li>
+                <li>
+                  <input type="radio" name="rating" value="2">
+                  <div class="rateYo rating2" data-rating="2"></div><h5>2.0 & up</h5>
+                </li>
+              </ul>
+            </div>
+            <div class="price_location">
+              <div class="maxPrice">
+                <h5 id="price_title"><b>Maximum hourly rate (CAD)</b></h5>
+                <h5><input type="number" name="price" placeholder="Maximum rate"
+                  value =
+                  <% if(queryFE !== null) { %>
+                    <%= queryFE.price %>
+                  <% } %>
+                  ></h5>
+              </div>
+              <div class="location">
+                <h5 id="location_title"><b>City</b></h5>
+                <h5><input id='autocomplete' type="text" name="city" placeholder="e.g. Calgary"
+                  value =
+                  <% if(queryFE !== null) { %>
+                    <%= queryFE.city %>
+                  <% } %>
+                  ></h5>
+              </div>
+            </div>
+
+            <button type="submit" name="button">Apply</button>
+          </form>
+        </div>
+
+      </div>
+    <% } %>
+    <div class="searchResult">
+      <% if(noMatch !== undefined) { %>
+        <h3>Oops! No results found for "<b><%= search %></b>".</h3>
+        <h4>Try searching again. Here are some tips for searching:</h4>
+        <ul>
+          <li><h4>Try more general keywords</h4></li>
+          <li><h4>Ensure words are spelt correctly</h4></li>
+          <li><h4>Try different filters</h4></li>
+          <li><h4>Broaden your search fields</h4></li>
+        </ul>
+
+      <% } %>
+      <div class="classListings">
+        <% Class.forEach(function(Class) { %>
+          <div class="classBox">
+            <div class="classCardOuter">
+              <a class="classCard" href="/allclasses/<%= Class.slug %>">
+                <div class="classTop">
+                  <% if(Class.mainSubject === 'Languages') { %>
+                    <img src="/assets/classIllustrations/languages.png" alt="class-illustration">
+                  <% } else if (Class.mainSubject === 'Math') { %>
+                    <img src="/assets/classIllustrations/math.png" alt="class-illustration">
+                  <% } else if (Class.mainSubject === 'Chemistry') { %>
+                    <img src="/assets/classIllustrations/chemistry.png" alt="class-illustration">
+                  <% } else if (Class.mainSubject === 'Physics') { %>
+                    <img src="/assets/classIllustrations/physics.png" alt="class-illustration">
+                  <% } else if (Class.mainSubject === 'Biology') { %>
+                    <img src="/assets/classIllustrations/biology.png" alt="class-illustration">
+                  <% } else { %>
+                    <img src="/assets/classIllustrations/math.png" alt="class-illustration">
+                  <% } %>
+
+                </div>
+                <div class="classMain">
+                  <div class="classRating">
+                    <% if(Class.classReviews.length > '0') { %>
+                      <div class="rateYo overallFilter" data-rating="<%= Class.overallAvg %>"></div>
+                      <h5><%= Class.overallAvg.toFixed(1) %> (<%= Class.classReviews.length %>)</h5>
+                    <% } else { %>
+                      <h5 id="noRatings">Not Yet Rated</h5>
+                    <% } %>
+                  </div>
+                  <div class="subject-level">
+                    <h5 id='level'><%= Class.educationLevel.toUpperCase() %></h5>
+                    <h5 id='subject'><%= Class.mainSubject.toUpperCase() %></h5>
+                  </div>
+                  <div class="title">
+                    <h4><%= Class.classTitle.toUpperCase() %></h4>
+                  </div>
+                  <div class="bottom">
+                    <h5><%= Class.author.city %></h5>
+                    <h4>CAD <%= Class.price %> per Hour</h4>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+      <div class="classListingsMob">
+        <% Class.forEach(function(Class) { %>
+          <hr>
+          <div class="mobClass">
+            <a class="classCardMob" href="/allclasses/<%= Class.slug %>">
+              <div class="classImageMob">
+                <% if(Class.mainSubject === 'Languages') { %>
+                  <img src="/assets/classIllustrations/languages.png" alt="class-illustration">
+                <% } else if (Class.mainSubject === 'Math') { %>
+                  <img src="/assets/classIllustrations/math.png" alt="class-illustration">
+                <% } else if (Class.mainSubject === 'Chemistry') { %>
+                  <img src="/assets/classIllustrations/chemistry.png" alt="class-illustration">
+                <% } else { %>
+                  <img src="/assets/classIllustrations/math.png" alt="class-illustration">
+                <% } %>
+
+                <div class="classRatingMob">
+                  <% if(Class.classReviews.length > '0') { %>
+                    <div class="rateYo rateMob" data-rating="<%= Class.overallAvg %>"></div>
+                    <h6><%= Class.overallAvg.toFixed(1) %> (<%= Class.classReviews.length %>)</h6>
+                  <% } else { %>
+                    <h6 id="noRatings">Not Yet Rated</h6>
+                  <% } %>
+                </div>
+              </div>
+              <div class="classInfoMob">
+                <div class="level-subject-mob">
+                  <h5 id='levelMob'><%= Class.educationLevel.toUpperCase() %></h5>
+                  <h5 id='subjectMob'><%= Class.mainSubject.toUpperCase() %></h5>
+                </div>
+                <div class="classRatingMobSmall">
+                  <% if(Class.classReviews.length > '0') { %>
+                    <div class="rateYo rateMobSmall" data-rating="<%= Class.overallAvg %>"></div>
+                    <h6><%= Class.overallAvg.toFixed(1) %> (<%= Class.classReviews.length %>)</h6>
+                  <% } else { %>
+                    <h6 id="noRatings">Not Yet Rated</h6>
+                  <% } %>
+                </div>
+                <div class="titleMob">
+                  <h4><%= Class.classTitle.toUpperCase() %></h4>
+                  <h5><%= Class.author.firstName %> <%= Class.author.lastName %></h5>
+                </div>
+                <div class="bottom">
+                  <h6><%= Class.author.city %></h6>
+                  <h5 id="priceMob">CAD <%= Class.price %> per Hour</h5>
+                </div>
+              </div>
+            </a>
+          </div>
+
+        <% }); %>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<% include partials/footer %>
+<script src="/scripts/search.js" type="text/javascript"></script>

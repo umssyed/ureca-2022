@@ -1,0 +1,24 @@
+<% include ../../partials/header %>
+
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/class/private/class-delete.css">
+
+<!-- Start -->
+<!-- <div class="se-pre-con"></div> -->
+<div class="class-delete">
+  <div class="container">
+    <div class="classEditIntro">
+      <h1>Warning: Delete Class</h1>
+      <hr>
+      <h4>Are you sure you want to delete you class: <b><%= Class.classTitle %></b>? This action cannot be reversed.</h4>
+      <h4>Please note that deleting your class will remove all associated reviews. If there are any pending class sessions with the students then the payments will be refunded back to the students.</h4>
+    </div>
+    <div class="action">
+      <form name="newClassForm" action="/blackboard/tutor/<%= Class._id %>?_method=DELETE" method="POST">
+        <button type="submit"><b>Delete</b></button>
+      </form>
+      <a href="/blackboard/tutor" id="back"><b>Go Back</b></a>
+    </div>
+  </div>
+
+<% include ../../partials/footer %>

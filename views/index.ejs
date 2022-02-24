@@ -1,0 +1,166 @@
+<% include partials/header %>
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/index.css">
+
+<div class="index">
+
+  <div class="heroImage">
+    <div class="heroContent">
+      <div class="container">
+        <h1>Ureca</h1>
+        <h3 id="intro">I am looking for a tutoring class<span>.</span></h3>
+        <div class="search">
+          <form class="searchForm" action="/classes" method="GET">
+            <input type="text" name="search" placeholder="Search Classes">
+            <button><i class="fas fa-search"></i></button>
+          </form>
+        </div>
+
+
+        <div class="herobtn">
+          <% if(User) { %>
+            <% if(User.isTutor) { %>
+              <div class="tutorBtn">
+                <a href="/blackboard">
+                  Blackboard
+                </a>
+              </div>
+              <div class="allclasses">
+                <a href="/allclasses">
+                  Explore Classes
+                </a>
+              </div>
+              <% } else { %>
+              <div class="tutorBtn">
+                <a href="/becometutor">
+                  Start Teaching
+                </a>
+              </div>
+              <div class="allclasses">
+                <a href="/allclasses">
+                  Explore Classes
+                </a>
+              </div>
+           <% } %>
+          <% } else { %>
+            <div class="becometutor">
+              <a href="/becometutor">
+                Start Teaching
+              </a>
+            </div>
+            <div class="allclasses">
+              <a href="/allclasses">
+                Explore Classes
+              </a>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="whyUreca">
+    <div class="container">
+      <h2>Why Ureca?</h2>
+      <div class="urecaInfo">
+        <div class="box">
+          <h4><b>Create your personalized class</b></h4>
+          <img src="/assets/icons/class_creation.png" alt="class_creation">
+          <h5>Tutors can start creating their own classes. Ureca will walk you through in creating classes that are more meaningful to your audience.</h5>
+        </div>
+        <div class="box">
+          <h4><b>Review the tutors who help you succeed</b></h4>
+          <img src="/assets/icons/RateTutors.png" alt="RateTutors">
+          <h5>Students can provide reviews to their tutors and help other students in the community.</h5>
+        </div>
+        <div class="box">
+          <h4><b>Manage from Ureca Blackboard</b></h4>
+          <img src="/assets/icons/blackboard_manage.png" alt="blackboard_manage">
+          <h5>Ureca provides every user with their own blackboard. Manage your classes or booked sessions all from one place.</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tutor">
+    <div class="container">
+      <div class="left">
+        <h2><b>Ureca for Tutors.</b></h2>
+        <br>
+        <h4><b>If you are a tutor trying to do what you love, you have landed on the right place! As a tutor, you can create your own personalized classes and add as many details as you want to them.</b></h4>
+        <div class="tutorBtn">
+          <% if(User) { %>
+            <% if(User.isTutor) { %>
+              <div class="tutorBtn">
+                <a href="/blackboard">
+                  Blackboard
+                </a>
+              </div>
+              <% } else { %>
+              <div class="tutorBtn">
+                <a href="/becometutor">
+                  Start Teaching
+                </a>
+              </div>
+            <% } %>
+          <% } else { %>
+            <a href="/becometutor">
+              Start Teaching
+            </a>
+          <% } %>
+        </div>
+      </div>
+      <div class="right">
+        <img src="/assets/icons/tutoring.png" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="student">
+    <div class="container">
+      <div class="left">
+        <h2><b>Ureca for Students.</b></h2>
+        <br>
+        <h4><b>As a student, trying to find the right tutor who can help you succeed at school can be hard. Join the Ureca community for free and search for the class you are struggling with. The class and tutor ratings provided by the community can help you decide which class is the right fit for you.</b></h4>
+        <div class="studentBtn">
+          <a href="/allclasses">
+            Find Classes
+          </a>
+        </div>
+      </div>
+      <div class="right">
+        <img src="/assets/icons/grad.png" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="finalBanner">
+      <div class="container">
+        <div class="leftExplore">
+          <h2 class="finalText">Start teaching. Start learning.</h2>
+          <div class="btn">
+            <% if(!User) { %>
+              <a href="/auth/signup">
+                Join for free
+              </a>
+            <% } else { %>
+              <a href="/allclasses">
+                Find Classes
+              </a>
+            <% } %>
+          </div>
+        </div>
+        <div class="rightSignUpFree">
+          <h2 class="finalText">Learn how to use Ureca.</h2>
+          <div class="btn">
+            <a href="/howtouse/basics">
+              How to use
+            </a>
+          </div>
+        </div>
+      </div>
+  </div>
+
+</div>
+
+<% include partials/footer %>

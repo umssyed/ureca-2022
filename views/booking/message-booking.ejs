@@ -1,0 +1,242 @@
+<% include ../partials/header %>
+<link rel="stylesheet" href="/stylesheets/booking/message-booking.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+<link rel="stylesheet" media="screen" type="text/css" href="/datepicker/css/datepicker.css" />
+<script type="text/javascript" src="/datepicker/js/datepicker.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
+
+
+<!-- Timepicker -->
+<script type="text/javascript" src="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="https://jonthornton.github.io/jquery-timepicker/jquery.timepicker.css">
+<script type="text/javascript" src="https://jonthornton.github.io/jquery-timepicker/lib/bootstrap-datepicker.js"></script>
+
+<!-- MomentJS -->
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script> -->
+<!-- datePicker -->
+<link href="/datepicker/css/datepicker.min.css" rel="stylesheet" type="text/css">
+<script src="/datepicker/js/datepicker.min.js"></script>
+<script src="/datepicker/js/i18n/datepicker.en.js"></script>
+<div class='message-booking'>
+  <input type="hidden" id="userID" value="<%= User._id %>">
+  <input type="hidden" id="tutorID" value="<%= Tutor._id %>">
+  <input type="hidden" id="studentID" value="<%= Student._id %>">
+  <input type="hidden" id="tutorName" value="<%= Tutor.firstName %> <%= Tutor.lastName %>">
+  <input type="hidden" id="studentName" value="<%= Student.firstName %> <%= Student.lastName %>">
+
+  <input type="hidden" id="tutorEmail" value="<%= Tutor.username %>">
+  <input type="hidden" id="studentEmail" value="<%= Student.username %>">
+
+  <% if(Booking[0].status === 'Approved') { %>
+  <div class="status">
+    <div class="container">
+        <h1><b><i class="fas fa-check"></i></b> Booking <b>Approved!</b></h1>
+    </div>
+  </div>
+  <% }; %>
+
+  <div class="container">
+    <div class="bookingBox">
+      <div class="bookingDetail">
+        <div class="student-tutor-info">
+          <% if(User._id.equals(Booking[0].tutor._id)) { %>
+            <h5>Your Student</h5>
+            <img src="<%= Booking[0].student.profilePhoto %>" alt="">
+            <a href="/user/<%= Booking[0].student.slug %>"><h3><%= Booking[0].student.firstName %> <%= Booking[0].student.lastName %></h3></a>
+            <h5><%= Booking[0].student.city %>, <%= Booking[0].student.province %></h5>
+            <%= Booking[0].student.occupation %>
+          <% } %>
+          <% if(User._id.equals(Booking[0].student._id)) { %>
+            <h5>Your Tutor</h5>
+            <img src="<%= Booking[0].tutor.profilePhoto %>" alt="">
+            <a href="/user/<%= Booking[0].tutor.slug %>"><h3><%= Booking[0].tutor.firstName %> <%= Booking[0].tutor.lastName %></h3></a>
+            <h5><%= Booking[0].tutor.city %>, <%= Booking[0].tutor.province %></h5>
+          <% } %>
+        </div>
+
+        <div class="details">
+          <div class="info">
+            <div class="bookingHeader">
+             <h5>Booking Details</h5>
+             <% if(Booking[0].status === 'Pending') { %>
+               <% if(moment().isAfter(Booking[0].date)) { %>
+                 <h5 id="expired">Expired</h5>
+               <% } else { %>
+                 <h5 id="pending"><%= Booking[0].status %></h5>
+               <% } %>
+             <% } %>
+             <% if(Booking[0].status === 'Approved') { %>
+               <h5 id="approved"><%= Booking[0].status %></h5>
+             <% } %>
+
+            </div>
+            <h3><%= Booking[0].class.classTitle %></h3>
+          </div>
+          <hr>
+          <div class="info">
+            <h5>Date and time</h5>
+            <h4><%= moment(Booking[0].date).format('dddd, MMMM Do YYYY') %></h4>
+            <div class="time">
+              <h5>Start Time :</h5>
+              <h4><%= Booking[0].startTime %></h4>
+              <span><i class="fas fa-chevron-right"></i></span>
+              <h5>End Time :</h5>
+              <h4><%= Booking[0].endTime %></h4>
+              <h5>( <%= Booking[0].hours %> hours)</h5>
+            </div>
+            <h6>Time displayed in 24 hour format</h6>
+
+            <h6 id="update"><i class="far fa-edit"></i> Modify Timing</h6>
+            <div class="no-display" id="updateBooking">
+              <hr>
+              <form name="Booking" action="/book/class/<%= Booking[0].class._id %>/bookref/<%= Booking[0]._id %>?_method=PUT" method="POST">
+                <h5>Select Date</h5>
+                <div class="date">
+                  <input autocomplete="off" required type='text' placeholder="Select Date" id="datePick" class='datepicker-here' data-language='en' value=''/>
+                  <input class="no-display" type="text" id="date" name="date" value=''>
+                </div>
+                <h5>Time Period</h5>
+                <div class="timePicker">
+                  <div class="timeForm">
+                    <input required id="startTime" name="startTime" type="text" data-time-format="H:i" placeholder="Start"/>
+                    <span><i class="fas fa-chevron-right"></i></span>
+                    <input required id="endTime" name="endTime" type="text" data-time-format="H:i" placeholder="End"/>
+                  </div>
+                </div>
+                <input class="no-display" type="number" id="price" value="<%= Booking[0].totalPrice %>">
+                <input required class="no-display" type="number" id="totalHours" name="hours" min="1" placeholder="0">
+                <input required class="no-display" type="number" id="totalPrice" name="totalPrice" min="1" placeholder="0">
+                <button id="Modify" type="submit">Update</button>
+              </form>
+            </div>
+
+
+          </div>
+          <hr>
+          <div class="info">
+            <h5>Price</h5>
+            <div class="price">
+              <h5>CAD <%= Booking[0].class.price %> x <%= Booking[0].hours %> hours</h5>
+              <h4>CAD <%= Booking[0].totalPrice %></h4>
+            </div>
+          </div>
+
+          <!-- If Tutor, show Approve or Decline  -->
+          <% if(User._id.equals(Booking[0].tutor._id)) { %>
+            <% if(moment().isBefore(Booking[0].date) || moment().isSame(Booking[0].date)) { %>
+              <div class="tutorBookingControl">
+                <% if(Booking[0].status === "Pending") { %>
+                  <form name="approve" action="/book/class/<%= Booking[0].class._id %>/bookref/<%= Booking[0]._id %>/approve?_method=PUT" method="POST">
+                    <button id="approveBooking" type="submit"><h5>Approve</h5></button>
+                  </form>
+                  <form action="/book/class/<%= Booking[0].class._id %>/bookref/<%= Booking[0]._id %>?_method=DELETE" method="POST">
+                    <button id="cancelBooking"><h5>Reject</h5></button>
+                  </form>
+                <% } %>
+
+                <% if(Booking[0].status === "Approved") { %>
+                  <h4>You have approved this booking</h4>
+                <% } %>
+              </div>
+            <% } %>
+          <% } %>
+
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="messageBox">
+      <div class="messageTitle">
+        <% if(User._id.equals(Booking[0].tutor._id)) { %>
+          <h2>Conversation with your student</h2>
+          <h5>Talk to your student before having them pay for the tutoring session. You should consider clarifying the following points and any other beforehand:</h5>
+          <ul>
+            <li><h5>Date, time and place of the tutoring class</h5></li>
+            <li><h5>Topics covered during the class</h5></li>
+            <li><h5>Students expectations and goals</h5></li>
+            <li><h5>Discuss any other questions that you or the student may have</h5></li>
+          </ul>
+        <% } %>
+
+        <% if(User._id.equals(Booking[0].student._id)) { %>
+          <h2>Conversation with your tutor</h2>
+          <h5>It is very important that you talk to your tutor before paying for the tutoring class. You should consider clarifying the following points and any other beforehand:</h5>
+          <ul>
+            <li><h5>Date, time and place of the tutoring class</h5></li>
+            <li><h5>Topics you would like to cover in class</h5></li>
+            <li><h5>Your expectations and goals for this class</h5></li>
+            <li><h5>What you hope to get out of this class</h5></li>
+            <li><h5>Discuss any other questions that you or the tutor may have</h5></li>
+          </ul>
+        <% } %>
+      </div>
+      <hr>
+      <div class="messageArea">
+        <% Booking[0].messages.reverse().forEach(function(message) { %>
+          <% if(User._id.equals(message.author._id)) { %>
+            <div class="messageAuthor">
+              <div class="authorInfo">
+                <img src="<%= message.author.profilePhoto %>" alt="">
+                <h5><b><%= message.author.firstName %></b></h5>
+              </div>
+              <div class="messageContent">
+                <h4><%= message.content %></h4>
+                <h5 class="date"><%= moment(message.date).format('LL') %></h5>
+              </div>
+            </div>
+            <br>
+            <br>
+          <% } else { %>
+            <div class="message">
+              <div class="authorInfo">
+                <img src="<%= message.author.profilePhoto %>" alt="">
+                <h5><b><%= message.author.firstName %></b></h5>
+              </div>
+              <div class="messageContent">
+                <h4><%= message.content %></h4>
+                <h5 class="date"><%= moment(message.date).format('LL') %></h5>
+              </div>
+            </div>
+            <br>
+            <br>
+          <% } %>
+        <% }); %>
+      </div>
+
+      <div class="sendMessageBox">
+        <form id="sendMessage" action="">
+          <% if(Booking[0].status === 'Pending') { %>
+            <% if(moment().isAfter(Booking[0].date)) { %>
+              <textarea disabled id="message" name="name" rows="5" cols="80" placeholder="Type a message."></textarea>
+            <% } else { %>
+              <textarea id="message" name="name" rows="5" cols="80" placeholder="Type a message."></textarea>
+              <button>Send Message</button>
+            <% } %>
+          <% } %>
+          <% if(Booking[0].status === 'Approved') { %>
+            <% if(moment().isAfter(moment(Booking[0].date).add(1, 'days'))) { %>
+              <textarea disabled id="message" name="name" rows="5" cols="80" placeholder="Type a message."></textarea>
+              <h4>You cannot message on this booking reference as it has been expired or overdue.</h4>
+            <% } else { %>
+              <textarea id="message" name="name" rows="5" cols="80" placeholder="Type a message."></textarea>
+              <button>Send Message</button>
+            <% } %>
+          <% } %>
+
+          <% if(Booking[0].status === 'Expired') { %>
+              <textarea disabled id="message" name="name" rows="5" cols="80" placeholder="Type a message."></textarea>
+          <% } %>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="/scripts/booking/io.js"></script>
+<% include ../partials/footer %>

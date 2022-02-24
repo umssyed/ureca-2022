@@ -1,0 +1,22 @@
+<% include ../partials/header %>
+<link rel="stylesheet" href="/stylesheets/authentication/reset.css">
+
+
+<div class="container">
+  <form action="/auth/reset/<%= token %>" method="POST">
+  		  <legend><h2>Reset Password</h2></legend>
+  		  <div class="form-group">
+  		    <label for="password"><h4><b>New Password</b></h4></label>
+  		    <input type="password" name="password" value="" placeholder="New password" autofocus="autofocus" class="form-control"/>
+  		  </div>
+  		  <div class="form-group">
+  		    <label for="confirm"><h4><b>Confirm Password</b></h4></label>
+  		    <input type="password" name="confirm" value="" placeholder="Confirm password" class="form-control"/>
+  		  </div>
+  		  <div class="form-group">
+  		    <button type="submit" class="btn btn-danger">Update Password</button>
+  		  </div>
+  </form>
+</div>
+
+<% include ../partials/footer %>

@@ -1,0 +1,64 @@
+<% include ../../../partials/header %>
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/user/private/blackboard/reviews-posted-tutor.css">
+<script src="/scripts/user/private/blackboard/reviews-posted-tutor.js" type="text/javascript"></script>
+
+<!-- Start -->
+<div class="blackboard">
+  <div class="banner">
+    <div class="container">
+      <h1>Blackboard</h1>
+      <div class="links">
+          <li><a href="/blackboard"><h4>Overview</h4></a></li>
+          <li><a href="/blackboard/tutor"><h4>Tutor</h4></a></li>
+          <li><a href="/blackboard/student"><h4>Student</h4></a></li>
+          <li id="selected"><a href="/blackboard/tutor-reviews"><h4>Reviews</h4></a></li>
+      </div>
+    </div>
+  </div>
+
+  <div class="tutor-posted">
+    <div class="container">
+      <div class="left">
+        <h4 id="selected_link"><a href='/blackboard/tutor-reviews'>Tutor reviews</a></h4>
+        <h4><a href='/blackboard/class-reviews'>Class reviews</a></h4>
+      </div>
+
+      <div class="right">
+        <div class="tutor-posted-links">
+          <select onchange="javascript:location.href = this.value;">
+            <option value="tutor-reviews">Available Reviews</option>
+            <option value="tutor-reviews-posted" selected>Posted Reviews</option>
+          </select>
+        </div>
+        <br>
+        <div class="tutorReviewBox">
+          <% if(postedUserReviews.length < 1) { %>
+            <h4>Nothing available to review yet! Start by <a href="/allclasses">booking</a> a class of your choice.</h4>
+          <% } %>
+          <% if(postedUserReviews.length > 0) { %>
+            <% postedUserReviews.forEach(function(reviews){ %>
+              <a href="/user/<%= reviews.tutor.slug %>">
+                <div class="tutorReview">
+                  <div class="top">
+                    <img src="<%= reviews.tutor.profilePhoto %>" alt="tutorimage">
+                  </div>
+                  <div class="bottom">
+                    <h4><b><%= reviews.tutor.firstName %> <%= reviews.tutor.lastName %></b></h4>
+                    <div class="rateYo overallTutor" data-rating="<%= reviews.overallRating.toFixed(1) %>"></div>
+                  </div>
+                </div>
+              </a>
+            <% }); %>
+          <% } %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<% include ../../../partials/footer %>
+<script src="/scripts/class/allclasses.js" type="text/javascript"></script>

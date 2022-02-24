@@ -1,0 +1,71 @@
+<% include ../../../partials/header %>
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/user/private/blackboard/reviews-class.css">
+
+<!-- Start -->
+<div class="blackboard">
+  <div class="banner">
+    <div class="container">
+      <h1>Blackboard</h1>
+      <div class="links">
+          <li><a href="/blackboard"><h4>Overview</h4></a></li>
+          <li><a href="/blackboard/class"><h4>Tutor</h4></a></li>
+          <li><a href="/blackboard/student"><h4>Student</h4></a></li>
+          <li id="selected"><a href="/blackboard/tutor-reviews"><h4>Reviews</h4></a></li>
+      </div>
+    </div>
+  </div>
+
+  <div class="class-review">
+    <div class="container">
+      <div class="left">
+        <h4><a href='/blackboard/tutor-reviews'>Tutor reviews</a></h4>
+        <h4 id="selected_link"><a href='/blackboard/class-reviews'>Class reviews</a></h4>
+      </div>
+
+      <div class="right">
+        <div class="class-review-links">
+          <select onchange="javascript:location.href = this.value;">
+            <option value="class-reviews" selected>Available Reviews</option>
+            <option value="class-reviews-posted">Posted Reviews</option>
+          </select>
+        </div>
+        <br>
+        <div class="classReviewBox">
+          <% if(availableReviews.length < 1) { %>
+            <h4>Nothing available to review yet.</h4>
+          <% } %>
+          <% if(availableReviews.length > 0) { %>
+            <% availableReviews.forEach(function(reviews){ %>
+              <a href="/allclasses/<%= reviews._id %>/reviews">
+                <div class="classReview">
+                  <div class="top">
+                    <% if(reviews.mainSubject === 'Languages') { %>
+                      <img src="/assets/classIllustrations/languages.png" alt="class-illustration">
+                    <% } else if (reviews.mainSubject === 'Math') { %>
+                      <img src="/assets/classIllustrations/math.png" alt="class-illustration">
+                    <% } else if (reviews.mainSubject === 'Chemistry') { %>
+                      <img src="/assets/classIllustrations/chemistry.png" alt="class-illustration">
+                    <% } else { %>
+                      <img src="/assets/classIllustrations/math.png" alt="class-illustration">
+                    <% } %>
+                  </div>
+                  <div class="bottom">
+                    <h4><%= reviews.classTitle %></h4>
+                    <h4><small>Leave a review</small></h4>
+                  </div>
+                </div>
+              </a>
+            <% }); %>
+          <% } %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<% include ../../../partials/footer %>
+<script src="/scripts/class/allclasses.js" type="text/javascript"></script>

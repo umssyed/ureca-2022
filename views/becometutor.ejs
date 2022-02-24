@@ -1,0 +1,108 @@
+<% include partials/header %>
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/becometutor.css">
+
+<div class="becometutor">
+  <div class="hero">
+    <div class="container">
+      <div class="left">
+        <h1>Explore your passion</h1>
+        <h3>Create your tutoring class. Start expanding your reach and earn money. </h3>
+        <br>
+        <div class="tutorBtn">
+          <% if(User === undefined) { %>
+            <a href="/auth/signup">
+              Sign Up Free
+            </a>
+          <% } else { %>
+            <% if(User.isTutor) { %>
+              <a href="/blackboard/tutor/new">
+                Create Class
+              </a>
+            <% } else { %>
+              <a href="/blackboard/tutor/new">
+                Create Class
+              </a>
+            <% } %>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="banner">
+    <div class="container">
+      <h2 id="expand">Create your tutoring content</h2>
+      <div class="bannerTutorial">
+        <div class="one">
+          <div class="box">
+            <h4 id="create"><b>1. Create you class</b></h4>
+            <h5>You can create multiple classes that you wish to teach. For example, you can have a highschool tutoring class for Physics and a Undergraduate class related to Sciences.</h5>
+            <h5>Plan out what you would like to teach. Give your class a simple title and description that would help the students understand what you are teaching. You can define a subject category for your class such as 'Physics' or 'Languages'.</h5>
+            <h5>Identify what level of education your target students are. You can add related institutes or course codes that you think wil help the students if they are enrolled in those particular courses at an institute.</h5>
+            <h5>If you have any additional learning materials that you will be providing then you can define them when you create your class. If you have a particular topics within a subject then add them as well. For example, if your tutoring class is for Algebra, then you can define topics such as 'Vector Algebra' or 'Linear Algebra'.</h5>
+            <h5>Finally, set a price for your class!</h5>
+          </div>
+          <div class="oneImg">
+            <img src="/assets/icons/createClass.png" alt="classcreate">
+          </div>
+        </div>
+
+        <hr>
+        <div class="two">
+          <div class="box">
+            <h4 id="manage"><b>2. Manage Blackboard</b></h4>
+            <h5>From your Blackboard you can create and edit classes. You can view requests from students and message.</h5>
+            <h5>Once your class has been created, it wil be posted for everyone to view. When a student books your class they will define the time and date. A messaging platform will open for both of you. You can message your student and discuss on their expecationss on the tutoring session.</h5>
+            <h5>If the time, date or place to meet does not work with your schedule, discuss with your student and modify from the messaging platform. Once you both agree on a time and place, you can aprove this tutoring session</h5>
+            <h5>Once approved, the session will show up on your 'Upcoming Classes'.</h5>
+            <h5>Please ensure that the place you choose to tutor your student is a friendly and learning environment where your student can succeed.</h5>
+          </div>
+          <div class="twoImg">
+            <img src="/assets/icons/bb.png" alt="blackboard">
+          </div>
+        </div>
+
+        <hr>
+        <div class="three">
+          <div class="box">
+            <h4 id="teach"><b>3. Start Teaching</b></h4>
+            <h5>On the day of your tutoring session, you can meet with your student and start teaching!</h5>
+            <h5>Welcome your student. Help your student succeed.</h5>
+            <h5>If your student books the same class with you for three sessions they are eligible to provide ratings on your class and you!</h5>
+            <h5>You can build a learning community around you. Ureca wishes you all the success!</h5>
+          </div>
+          <div class="threeImg">
+            <img src="/assets/icons/teach.png" alt="teach">
+          </div>
+        </div>
+
+        <div class="end">
+          <h2 id="end">Become a tutor today</h2>
+          <h4>Join the Ureca tutoring community.</h4>
+          <div class="tutorBtn">
+            <% if(User === undefined) { %>
+              <a href="/auth/login">
+                Sign Up Free
+              </a>
+            <% } else { %>
+              <% if(User.isTutor) { %>
+                <a href="/blackboard/tutor/new">
+                  Create Class
+                </a>
+              <% } else { %>
+                <a href="/blackboard/tutor/new">
+                  Create Class
+                </a>
+              <% } %>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<br>
+<% include partials/footer %>
+<script src="/scripts/becometutor.js" type="text/javascript"></script>

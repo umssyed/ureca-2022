@@ -1,0 +1,67 @@
+<% include ../../../partials/header %>
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/user/private/blackboard/tutor-booking.css">
+
+<!-- Start -->
+<div class="blackboard">
+  <div class="banner">
+    <div class="container">
+      <h1>Blackboard</h1>
+      <div class="links">
+          <li><a href="/blackboard"><h4>Overview</h4></a></li>
+          <li id="selected"><a href="/blackboard/tutor"><h4>Tutor</h4></a></li>
+          <li><a href="/blackboard/student"><h4>Student</h4></a></li>
+          <li><a href="/blackboard/tutor-reviews"><h4>Reviews</h4></a></li>
+      </div>
+    </div>
+  </div>
+
+  <div class="tutor-booking">
+    <div class="container">
+      <div class="left">
+        <h4><a href='/blackboard/tutor'>Manage Your Classes</a></h4>
+        <h4 id="selected_link"><a href='/blackboard/tutor/scheduled'>Scheduled Classes</a></h4>
+        <h4><a href='/blackboard/tutor/booking'>Booking Requests</a></h4>
+        <a href="/blackboard/tutor/new"><div><h4>Create Class</h4></div></a>
+      </div>
+
+      <div class="right">
+        <% if(!User.isTutor) { %>
+          <h4>You currently have no booking requests. Click on <b>Create Class</b> to start getting booking requests from students!</h4>
+        <% } %>
+        <% if(User.tutorBooking.length < 1) { %>
+          <h4>You currently have no booking requests.</h4>
+        <% } else { %>
+          <% if(User.tutorBooking) { %>
+            <% User.tutorBooking.reverse().forEach(function(booking) { %>
+              <% if(booking.student && booking.class && moment().isBefore(booking.date) || moment().isSame(booking.date)){ %>
+                <div class="bookingRequests">
+                  <% if(booking.status === 'Pending') { %>
+                    <h5 id="pending"><b><%= booking.status %></b></h5>
+                  <% } else { %>
+                    <h5 id="approved"><b><%= booking.status %></b></h5>
+                  <% } %>
+
+                  <h4><b><%= booking.class.classTitle %></b></h4>
+                  <h5>Student: <b><%= booking.student.firstName %> <%= booking.student.lastName %></b></h5>
+                  <h5>Tutoring Date: <b><%= moment(booking.date).format('MMM Do, YYYY') %></b></h5>
+                  <div class="actions">
+                    <h5><a href="/book/class/<%= booking.class._id %>/bookref/<%= booking._id %>"><i class="far fa-comment-alt"></i> Message Student</a></h5>
+                  </div>
+                </div>
+              <% } %>
+            <% }); %>
+          <% }; %>
+        <% }; %>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+<% include ../../../partials/footer %>
+<script src="/scripts/class/allclasses.js" type="text/javascript"></script>

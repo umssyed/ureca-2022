@@ -1,0 +1,48 @@
+<% include partials/header %>
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/contact.css">
+
+<div class="contact">
+  <div class="container">
+
+      <h2>Contact Us</h2>
+      <h5>Tell us about an issue you are having or how you think we can improve Ureca to help you better!</h5>
+      <form class="contactForm" action="/contact" method="POST">
+        <div class="formBox">
+          <div class="name_email">
+            <div class="name">
+              <% if(User) { %>
+                <label for="fullName"><h5>Full Name</h5></label>
+                <input required type="text" name="fullname" value="<%= User.firstName %> <%= User.lastName %>">
+              <% } else { %>
+                <label for="fullName"><h5>Full Name</h5></label>
+                <input required type="text" name="fullname" value="">
+              <% } %>
+            </div>
+            <div class="email">
+              <% if(User) { %>
+                <label for="emailContact"><h5>Email</h5></label>
+                <input required type="emailContact" name="email" value="<%= User.username %>">
+              <% } else { %>
+                <label for="emailContact"><h5>Email</h5></label>
+                <input required type="emailContact" name="email" value="">
+              <% } %>
+            </div>
+          </div>
+
+
+          <label for="subject"><h5>Subject</h5></label>
+          <input required type="text" name="subject" value="">
+          <label for="message"><h5>Message</h5></label>
+          <textarea required name="message" rows="8" cols="80"></textarea>
+        </div>
+        <button type="submit" name="button">Submit</button>
+      </form>
+
+  </div>
+
+</div>
+
+
+<% include partials/footer %>
+<script src="/scripts/becometutor.js" type="text/javascript"></script>

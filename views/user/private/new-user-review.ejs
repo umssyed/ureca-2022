@@ -1,0 +1,47 @@
+<% include ../../partials/header %>
+
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/user/private/new-user-review.css">
+
+<!-- Start -->
+<div class="new-user-review">
+  <div class="container">
+    <form name="newUserReviewForm" action="/user/<%= Profile[0].slug %>/reviews" method="POST">
+      <h1>Leave A Review For <%= Profile[0].firstName %></h1>
+      <h4 class="sub">Your review will help other students understand if this class is a right fit for them.</h4>
+
+
+      <div class="reviewArea">
+        <div class="left">
+          <h3><b>Overall Experience</b></h3>
+          <h4 class="sub">How would you rate your overall experience in this class?</h4>
+          <div class="rateYo" id="overallTutor"></div>
+          <input class="inputOverallTutor" type="number" min="0" max="5" name="overallRating" step="0.5" value="">
+          <br>
+
+          <h3><b>Describe your learning experience with <%= Profile[0].firstName %></b></h3>
+          <!-- <label for="comment"><h4 class="sub">How well-equipped and knowledgeable is the tutor in this class?</h4></label> -->
+          <textarea required type="text" name="comment" rows="10" cols="100"
+          placeholder="Describe your overall experience in words. What did you learn in this class and any other thoughts and experience you would like to share.
+
+How can this class be improved? Provide suggestions for your tutor!
+          " ></textarea>
+
+        </div>
+
+        <div class="right">
+          <div class="classBox">
+            <h4></h4>
+          </div>
+        </div>
+      </div>
+
+      <h4>Thank you for your input! Your reviews will help the tutors and students in your community!</h4>
+      <button type="submit">Submit Review</button>
+    </form>
+
+
+  </div>
+
+<% include ../../partials/footer %>
+<script src="/scripts/user/private/new-user-review.js" type="text/javascript"></script>

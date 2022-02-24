@@ -1,0 +1,57 @@
+<% include ../../../partials/header %>
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/user/private/blackboard/bookings.css">
+
+<!-- Start -->
+<div class="blackboard">
+  <div class="banner">
+    <div class="container">
+      <h1>Blackboard</h1>
+      <div class="links">
+          <li><a href="/blackboard"><h4>Overview</h4></a></li>
+          <li><a href="/blackboard/tutor"><h4>Tutor</h4></a></li>
+          <li><a href="/blackboard/learning"><h4>Student</h4></a></li>
+          <li id="selected"><a href="/blackboard/bookings"><h4>Bookings</h4></a></li>
+          <li><a href="/blackboard/tutor-reviews"><h4>Reviews</h4></a></li>
+      </div>
+    </div>
+  </div>
+
+  <div class="bookings">
+    <div class="container">
+      <h4><b>Booking Requests</b></h4>
+
+      <div class="bookingBox">
+        <% if(!User.bookings) { %>
+          <h4>You currently have no booking requests.</h4>
+        <% } else { %>
+          <% User.bookings.forEach(function(booking) { %>
+            <a href="/book/class/<%= booking.class %>/bookref/<%= booking._id %>">
+              <h4>You have requested to book: <%= booking.class.classTitle %></h4>
+            </a>
+          <% }); %>
+        <% }; %>
+      </div>
+      <!-- <div class="left">
+          <h4>Booking Requests</h4>
+      </div>
+
+      <div class="right">
+        <% if(User.bookings) { %>
+          <li>
+          <% User.bookings.forEach(function(booking) { %>
+            <a href="/book/class/<%= booking.class %>/bookref/<%= booking._id %>">
+              <h4>You have requested to book: <%= booking.class.classTitle %></h4>
+            </a>
+          <% }); %>
+        </li>
+        <% }; %>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+
+
+<% include ../../../partials/footer %>
+<script src="/scripts/class/allclasses.js" type="text/javascript"></script>

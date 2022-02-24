@@ -1,0 +1,99 @@
+<% include ../../../partials/header %>
+<!-- Include CSS/Scripts -->
+<link rel="stylesheet" href="/stylesheets/user/private/blackboard/notifications.css">
+
+<!-- Start -->
+<div class="blackboard">
+  <div class="banner">
+    <div class="container">
+      <h1>Blackboard</h1>
+      <div class="links">
+          <li id="selected"><a href="/blackboard"><h4>Overview</h4></a></li>
+          <li><a href="/blackboard/tutor"><h4>Tutor</h4></a></li>
+          <li><a href="/blackboard/student"><h4>Student</h4></a></li>
+          <li><a href="/blackboard/tutor-reviews"><h4>Reviews</h4></a></li>
+      </div>
+    </div>
+  </div>
+
+  <div class="notifications">
+    <div class="container">
+      <div class="left">
+        <h4><a href='/blackboard'>To-Do's</a></h4>
+        <h4 id="selected_link">
+          <a href='/blackboard/notifications'>Notifications
+          <% if(User.notifications.length > 0) { %>
+            (<%= User.notifications.length %>)
+          <% } %>
+          </a>
+        </h4>
+      </div>
+
+      <div class="right">
+
+        <% if(User.notifications.length <= 0) { %>
+          <h4>You have no new notifications.</h4>
+        <% } else { %>
+            <div class="notificationArea">
+              <form name="newClassForm" action="/notifications?_method=DELETE" method="POST">
+                <button type="submit"><h4><i class="fas fa-times"></i> Mark All As Read</h4></button>
+              </form>
+              <% User.notifications.forEach(function(notification) { %>
+
+                    <!-- NEW CLASS NOTIFICATION -->
+                    <% if(notification.type == 'new_class') { %>
+                      <a>
+                        <h4><%= notification.item %> has been created. Click on the tutor tab to view your classes. </h4>
+                      </a>
+                    <% } %>
+
+                    <!-- CLASS REVIEW NOTIFICATION -->
+                    <% if(notification.type == 'new_class_review') { %>
+                      <a href="/allclasses/<%= notification.slug %>">
+                        <img src="<%= notification.author.profilePhoto %>" alt="">
+                        <h4><%= notification.author.firstName %> <%= notification.author.lastName %> has reviewed your class <%= notification.item %></h4>
+                      </a>
+                    <% } %>
+
+                    <!-- USER REVIEW NOTIFICATION -->
+                    <% if(notification.type == 'new_user_review') { %>
+                      <a href="/user/<%= User.slug %>">
+                        <img src="<%= notification.author.profilePhoto %>" alt="">
+                        <h4><%= notification.author.firstName %> <%= notification.author.lastName %> has submitted a review on your profile</h4>
+                      </a>
+                    <% } %>
+
+                    <!-- CLASS BOOKING NOTIFICATION -->
+                    <% if(notification.type == 'new_booking') { %>
+                      <a href="<%= notification.slug %>">
+                        <img src="<%= notification.author.profilePhoto %>" alt="">
+                        <h4><%= notification.author.firstName %> <%= notification.author.lastName %> has requested to book your class <%= notification.item %></h4>
+                      </a>
+                    <% } %>
+
+                    <!-- NEW MESSAGE NOTIFICATION -->
+                    <% if(notification.type == 'new_message') { %>
+                      <a href="<%= notification.slug %>">
+                        <img src="<%= notification.author.profilePhoto %>" alt="">
+                        <h4><%= notification.author.firstName %> <%= notification.author.lastName %> has sent you a new message</h4>
+                      </a>
+                    <% } %>
+
+                    <!-- APPROVED CLASS NOTIFICATION -->
+                    <% if(notification.type == 'booking_approved') { %>
+                      <a>
+                        <img src="<%= notification.author.profilePhoto %>" alt="">
+                        <h4><%= notification.author.firstName %> <%= notification.author.lastName %> has approved your booking for <%= notification.item %>. Click on the Student tab to view your approved upcoming classes.</h4>
+                      </a>
+                    <% } %>
+
+              <% }); %>
+            </div>
+        <% }; %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/scripts/user/private/blackboard/notifications.js" type="text/javascript"></script>
+<% include ../../../partials/footer %>
